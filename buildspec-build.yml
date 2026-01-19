@@ -20,4 +20,5 @@ artifacts:
     - dist/api.zip
     - dist/etl.zip
     - terraform/**/*
+    - lambda/**/*
     - buildspec-deploy.yml
