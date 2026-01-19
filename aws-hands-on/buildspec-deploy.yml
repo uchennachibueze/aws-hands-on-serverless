@@ -1,0 +1,28 @@
+version: 0.2
+env:
+variables:
+TF_DIR: "terraform"
+phases:
+install:
+runtime-versions:
+python: 3.11
+commands:
+- echo "Installing Terraform..."
+- curl -sSLo /tmp/terraform.zip https://releases.hashicorp.com/terraform/1.6.6/terraform_1.6.6_linux_amd64.- unzip -o /tmp/terraform.zip -d /usr/local/bin
+- terraform -version
+pre_build:
+commands:
+- echo "Terraform init/apply..."
+- cd $TF_DIR
+- terraform init
+- terraform apply -auto-approve
+- echo "Reading outputs..."
+- API_FUNCTION=$(terraform output -raw api_lambda_name)
+- ETL_FUNCTION=$(terraform output -raw etl_lambda_name)
+- cd ..
+build:
+commands:
+- echo "Deploying Lambda code..."
+- aws lambda update-function-code --function-name "$API_FUNCTION" --zip-file fileb://dist/api.zip
+- aws lambda update-function-code --function-name "$ETL_FUNCTION" --zip-file fileb://dist/etl.zip
+- echo "Done."

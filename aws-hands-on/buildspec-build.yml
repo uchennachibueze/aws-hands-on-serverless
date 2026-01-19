@@ -1,0 +1,20 @@
+version: 0.2
+phases:
+install:
+runtime-versions:
+python: 3.11
+commands:
+- python --version
+- pip install --upgrade pip
+build:
+commands:
+- echo "Packaging Lambda zips..."
+- mkdir -p dist
+- (cd lambda/api && zip -r ../../dist/api.zip .)
+- (cd lambda/etl && zip -r ../../dist/etl.zip .)
+artifacts:
+files:
+- dist/api.zip
+- dist/etl.zip
+- terraform/**/*
+- buildspec-deploy.yml
