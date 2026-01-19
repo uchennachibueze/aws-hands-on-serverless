@@ -1,7 +1,7 @@
 # Terraform local state & cache
 **/.terraform/
 .terraform.lock.hcl
-
+**/build
 # Terraform state files
 *.tfstate
 *.tfstate.*
