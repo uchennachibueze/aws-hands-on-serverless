@@ -27,7 +27,7 @@ phases:
       - echo "=== NOW TERRAFORM ==="
       - echo "Terraform init/apply..."
       - cd $TF_DIR
-      - terraform init
+      - terraform init -reconfigure
       - terraform apply -auto-approve
       - echo "Reading outputs..."
       - API_FUNCTION=$(terraform output -raw api_lambda_name)
