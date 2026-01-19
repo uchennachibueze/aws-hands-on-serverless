@@ -16,6 +16,12 @@ phases:
 
   pre_build:
     commands:
+      - echo "Listing repo root..."
+      - ls -la
+      - echo "Listing lambda folder..."
+      - ls -la lambda || true
+      - ls -la lambda/api || true
+      - ls -la lambda/etl || true
       - echo "Terraform init/apply..."
       - cd $TF_DIR
       - terraform init
