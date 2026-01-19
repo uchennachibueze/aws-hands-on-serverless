@@ -131,6 +131,15 @@ resource "aws_iam_role_policy" "lambda_policy" {
         Version="2012-10-17",
         Statement=[
             {
+                Effect = "Allow",
+                Action = [
+                    "codebuild:BatchGetProjects",
+                    "codebuild:ListProjects",
+                    "codebuild:BatchGetBuilds"
+                ],
+                Resource = "*"
+            },
+            {
                 Effect="Allow",
                 Action=["logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents"],
                 Resource="*"
