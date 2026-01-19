@@ -16,12 +16,15 @@ phases:
 
   pre_build:
     commands:
-      - echo "Listing repo root..."
+      - echo "=== SHOW ROOT ==="
       - ls -la
-      - echo "Listing lambda folder..."
-      - ls -la lambda || true
-      - ls -la lambda/api || true
-      - ls -la lambda/etl || true
+      - echo "=== SHOW TOP-LEVEL DIRS ==="
+      - find . -maxdepth 2 -type d -print
+      - echo "=== SEARCH FOR app.py ==="
+      - find . -maxdepth 6 -type f -name "app.py" -print || true
+      - echo "=== SEARCH FOR lambda dir ==="
+      - find . -maxdepth 5 -type d -name "lambda" -print || true
+      - echo "=== NOW TERRAFORM ==="
       - echo "Terraform init/apply..."
       - cd $TF_DIR
       - terraform init
