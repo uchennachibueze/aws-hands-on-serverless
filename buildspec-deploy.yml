@@ -16,15 +16,6 @@ phases:
 
   pre_build:
     commands:
-      - echo "=== SHOW ROOT ==="
-      - ls -la
-      - echo "=== SHOW TOP-LEVEL DIRS ==="
-      - find . -maxdepth 2 -type d -print
-      - echo "=== SEARCH FOR app.py ==="
-      - find . -maxdepth 6 -type f -name "app.py" -print || true
-      - echo "=== SEARCH FOR lambda dir ==="
-      - find . -maxdepth 5 -type d -name "lambda" -print || true
-      - echo "=== NOW TERRAFORM ==="
       - echo "Terraform init/apply..."
       - cd $TF_DIR
       - terraform init -reconfigure
@@ -40,3 +31,9 @@ phases:
       - aws lambda update-function-code --function-name "$API_FUNCTION" --zip-file fileb://dist/api.zip
       - aws lambda update-function-code --function-name "$ETL_FUNCTION" --zip-file fileb://dist/etl.zip
       - echo "Done."
+
+  post_build:
+    commands:
+      - echo "Terraform destroy..."
+      - cd $TF_DIR
+      - terraform destroy -auto-approve
